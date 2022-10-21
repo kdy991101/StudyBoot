@@ -36,7 +36,7 @@
 					<td>${QnaVO.hit}</td>
 					<c:forEach items="${QnaVO.qnaFileVOs}" var="i">
 						<td>
-							<img src="/app/upload/${i.fileName}" style="width: 150px; height: 150px;" >
+							<img src="/file/${i.fileName}" style="width: 150px; height: 150px;" >
 						</td>
 					</c:forEach>
 				</tr>
