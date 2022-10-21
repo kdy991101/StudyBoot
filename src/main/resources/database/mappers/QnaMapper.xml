@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.iu.home.board.qna.QnaMapper">
+
+ <select id="getList" resultType="QnaVO" parameterType="Pager">
+ 	SELECT *
+	FROM QNA 
+	ORDER BY NUM DESC LIMIT 0, 10
+ </select>
+ 
+ <select id="getCount" resultType="Long" parameterType="Pager">
+ <!-- TOTALCOUTN  -->
+ 	SELECT COUNT(NUM) FROM QNA
+ </select>
+ 
+<insert id="setAdd" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="num">
+		insert into QNA 
+		values (#{num}, #{title}, #{writer}, #{contents}, 0, now(), 0,0,0)
+	</insert>
+	
+	<insert id="setFileAdd" parameterType="QnaFileVO">
+		INSERT INTO QNAFILES
+		VALUES (NULL, #{num}, #{fileName}, #{oriName})
+	</insert>
+	
+	<select id="getDetail" parameterType="QnaVO" resultMap="getDetailResult">
+		SELECT Q.*, F.FILENUM, F.FILENAME, F.ORINAME FROM QNA Q
+		LEFT JOIN QNAFILES F
+		ON Q.NUM = F.NUM
+		WHERE Q.NUM = #{num}
+	</select>
+	
+	<resultMap type="QnaVO" id="getDetailResult">
+		<id column="NUM" property="num"/>
+		<result column="WRITER" property="writer"/>
+		<result column="TITLE" property="title"/>
+		<result column="CONTENTS" property="contents"/>
+		<result column="HIT" property="hit"/>
+		<result column="REGDATE" property="regDate"/>
+		<result column="REF" property="ref"/>
+		<result column="STEP" property="step"/>
+		<result column="DEPTH" property="depth"/>
+		<collection property="qnaFileVOs" javaType="List" ofType="QnaFileVO">
+			<id column="FILENUM" property="fileNum"/>
+			<result column="FILENAME" property="fileName"/>
+			<result column="ORINAME" property="oriName"/>
+		</collection>
+	</resultMap>
+
+</mapper>
