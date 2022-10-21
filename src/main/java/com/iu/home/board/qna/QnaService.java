@@ -50,10 +50,10 @@ public class QnaService {
 		//isEmpty 비었는지 물어보는 것 없으면 true
 		//
 		for(MultipartFile f : qnaVO.getFiles()) {
-			if(f.isEmpty()) {
-				log.info("=============================================Exception발생");
-				throw new Exception();//만약 파일이 비어있다면 Exception을 강제로 발생
-			}
+//			if(f.isEmpty()) {
+//				log.info("=============================================Exception발생");
+//				throw new Exception();//만약 파일이 비어있다면 Exception을 강제로 발생
+//			}
 			
 			if(!f.isEmpty()) {
 				String fileName = fileManager.saveFile(f, path);
