@@ -145,4 +145,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# my file
+application-secret.properties
+
+
 target/m2e-wtp/web-resources/META-INF/maven/com.iu/home/pom.properties

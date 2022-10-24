@@ -28,8 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
 		log.info("=========================================================");
 		
 //		registry -> 회원가입, 등록, 추가 ~~
+		//urlPath는 멤버변수임 
 		registry.addResourceHandler(urlPath) //어떤 요청 주소를 작성해주는 것, mapping작업과 동일
 		.addResourceLocations(filePath);
+		//url경로가 /file로 시작하는 모든 것들은 filePath에서 찾아라~~
 		
 	}
 
