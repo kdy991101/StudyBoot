@@ -31,8 +31,8 @@
 		WHERE Q.NUM = #{num}
 	</select>
 	
-	<select id="getFileDetail" parameterType="QnaFileVO">
-		SELECT FILENAME, ORINAME FROM QNAFILES WHERE FILENUM = ${fileNum}
+	<select id="getFileDetail" parameterType="QnaFileVO" resultType="QnaFileVO">
+		SELECT * FROM QNAFILES WHERE FILENUM = ${fileNum}
 	</select>
 	
 	<resultMap type="QnaVO" id="getDetailResult">

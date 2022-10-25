@@ -49,6 +49,7 @@ public class FileManageController {
 		
 		if(path.equals("qna")) {
 			qnaFileVO = qnaService.getFileDetail(qnaFileVO);
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++="+qnaFileVO);
 		}
 		
 		mv.addObject("fileVO",qnaFileVO);//파일 정보
