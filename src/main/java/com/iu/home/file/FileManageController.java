@@ -1,17 +1,21 @@
 package com.iu.home.file;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.iu.home.board.qna.QnaFileVO;
+import com.iu.home.board.qna.QnaService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 public class FileManageController {
+	@Autowired
+	private QnaService qnaService;
 //	@GetMapping("/fileDown/qna")
 //	public ModelAndView fileDown(QnaFileVO qnaFileVO)throws Exception{
 //		ModelAndView mv = new ModelAndView();
@@ -43,12 +47,20 @@ public class FileManageController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		qnaFileVO.setFileName("gg.jpg");
-		qnaFileVO.setOriName("gg.jpg");
+		if(path.equals("qna")) {
+//			qnaFileVO = qnaService.getFileDetail();
+			qnaFileVO.setFileName("gg.jpg");
+			qnaFileVO.setOriName("gg.jpg");
+		}else if(path.equals("notice")) {
+			
+			qnaFileVO.setFileName("gg.jpg");
+			qnaFileVO.setOriName("gg.jpg");
+		}
 		
-		mv.addObject("fileVO",qnaFileVO);
-		mv.addObject("path", path);
-		mv.setViewName("fileManager");
+		
+		mv.addObject("fileVO",qnaFileVO);//파일 정보
+		mv.addObject("path", path);//qna, notice, member
+		mv.setViewName("fileManager");//view의 이름
 		
 		return mv;
 	}

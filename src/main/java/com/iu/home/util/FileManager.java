@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileManager extends AbstractView {
 	
+	@Value("${app.download.base}")
+	private String base;
+	
+//	AbstractView를 상속받아 renderMergedOutputModel를 오버라이딩 한것
 	@Override//다운로드를 걸어주는 메서드임
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -30,10 +35,11 @@ public class FileManager extends AbstractView {
 		  log.info("========================================");
 		  log.info("File DownLoad View");
 		
-		QnaFileVO qnaFileVO = (QnaFileVO)model.get("fileVO");
+		QnaFileVO qnaFileVO = (QnaFileVO)model.get("fileVO");//모델에서 fileVO를 꺼냄
 		String path = (String)model.get("path");
 		log.info("FIELVO{}"+ qnaFileVO);
-		File file = new File("D:/result/upload/"+path, qnaFileVO.getFileName());
+//		File file = new File("D:/result/upload/"+path, qnaFileVO.getFileName());//배포하면 여기가 경로가 바뀜... 수정해줘야 함
+		File file = new File(base+path, qnaFileVO.getFileName());
 		
 		//한글처리
 		response.setCharacterEncoding("UTF-8");//인코딩 처리
