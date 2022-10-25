@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MemberService {
 	
 	@Autowired
@@ -18,6 +20,9 @@ public class MemberService {
 		
 		if(result1 == 1 && result2 == 1) {
 			result = 1;
+		}
+		if (result<1) {
+			throw new Exception();
 		}
 		return result;
 	}
