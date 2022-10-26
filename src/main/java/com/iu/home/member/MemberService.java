@@ -31,6 +31,10 @@ public class MemberService {
 		return memberMapper.getLogin(memberVO);
 	}
 	
+	public int getIdCheck(MemberVO memberVO)throws Exception{
+		return memberMapper.getIdCheck(memberVO);
+	}
+	
 
 
 }

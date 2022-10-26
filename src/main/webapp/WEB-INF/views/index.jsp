@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="/css/test.css" rel="stylesheet">
+<script defer src="/js/test.js"></script>
+<!-- defer병렬처리하는 것 -->
+<c:import url="./temp/boot.jsp"></c:import>
 </head>
 <body>
 	<h1>Index Page</h1>
@@ -42,11 +45,19 @@
 			</c:otherwise>
 		</c:choose>
 	</div --%>>
+
+	<button  id="btn">click</button>
+
+	<button  class="buttons">buttons1</button>
+	<button  class="buttons">buttons2</button>
+	<button  class="buttons">buttons3</button>
+
+	<button id="test">test click</button>
 	
 	
 	
-		
 	
 	
+
 </body>
 </html>

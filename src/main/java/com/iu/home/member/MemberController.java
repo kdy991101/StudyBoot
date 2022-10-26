@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -44,6 +45,13 @@ public class MemberController {
 	public String getLogout(HttpSession session)throws Exception{
 		session.invalidate();//비유효하게 하겠다 session을 종료하겠다~~
 		return "redirect:/";
+	}
+	
+	@GetMapping("idCheck")
+	@ResponseBody
+	public int getIdCheck(MemberVO memberVO)throws Exception{
+		int result = memberService.getIdCheck(memberVO);
+		return result;
 	}
 	
 

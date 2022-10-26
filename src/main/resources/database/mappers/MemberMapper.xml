@@ -13,6 +13,11 @@
 		(#{id}, 1)
 	</insert>
 	
+	<select id="getIdCheck" parameterType="MemberVO" resultType="int">
+		SELECT COUNT(*) FROM
+		MEMBER WHERE ID = #{id}  
+	</select>
+	
 	<select id="getLogin" parameterType="MemberVO" resultMap="getLoginResult">
 		SELECT M.* , R.*
 		FROM 
