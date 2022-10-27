@@ -27,7 +27,7 @@ public class QnaAdvice {
 //	}
 	
 	//qnaService에서 set으로 시작하는 애들
-	@Around("execution(* com.iu.home.board.qna.QnaService.set*(..))")
+//	@Around("execution(* com.iu.home.board.qna.QnaService.set*(..))")
 	public Object aroundTest(ProceedingJoinPoint joinPoint)throws Throwable{
 //		execution=실행
 //		@Around("execution(*에서 *은 모든 리턴타입을 말한다 

@@ -14,6 +14,8 @@
  	SELECT COUNT(NUM) FROM QNA
  </select>
  
+ 
+ 
 <insert id="setAdd" parameterType="QnaVO" useGeneratedKeys="true" keyProperty="num">
 		insert into QNA 
 		values (#{num}, #{title}, #{writer}, #{contents}, 0, now(), 0,0,0)
@@ -24,6 +26,14 @@
 		VALUES (NULL, #{num}, #{fileName}, #{oriName})
 	</insert>
 	
+	<delete id="setFileDelete" parameterType="QnaFileVO">
+		DELETE FROM QNAFILES WHERE FILENUM=#{fileNum}
+	</delete>
+	
+	<select id="getFileDetail" parameterType="QnaFileVO" resultType="QnaFileVO">
+		SELECT * FROM QNAFILES WHERE FILENUM = ${fileNum}
+	</select>
+	
 	<select id="getDetail" parameterType="QnaVO" resultMap="getDetailResult">
 		SELECT Q.*, F.FILENUM, F.FILENAME, F.ORINAME FROM QNA Q
 		LEFT JOIN QNAFILES F
@@ -31,9 +41,6 @@
 		WHERE Q.NUM = #{num}
 	</select>
 	
-	<select id="getFileDetail" parameterType="QnaFileVO" resultType="QnaFileVO">
-		SELECT * FROM QNAFILES WHERE FILENUM = ${fileNum}
-	</select>
 	
 	<resultMap type="QnaVO" id="getDetailResult">
 		<id column="NUM" property="num"/>

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../temp/boot.jsp"></c:import>
+<script defer src="/js/write.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 </head>
 <body>
@@ -26,14 +27,23 @@
 				<label for="contents" class="form-label">Contents</label>
 				<textarea class="form-control" id="contents" aria-describedby="emailHelp" name="contents"></textarea>
 			</div>
-			<div class="mb-3">
+			<!-- <div class="mb-3">
 				<label for="contents" class="form-label">Files</label>
 				<input type="file" name="files">
 			</div>
 			<div class="mb-3">
 				<label for="contents" class="form-label">Files</label>
 				<input type="file" name="files">
+			</div> -->
+			
+			<div class="mb-3" id="files">
+		
 			</div>
+			
+			<div class="mb-3" >
+				<button type="button" id="fileAdd">FileAdd</button>
+			</div>
+			
 				<input type="hidden" name="hit" value="0">
 				<input type="hidden" name="ref" value="0">
 				<input type="hidden" name="depth" value="0">

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <c:import url="../temp/boot.jsp"></c:import>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <style>
@@ -44,9 +45,9 @@
 			</tbody>
 		</table>
 		<textarea class="form-control" id="contents">${QnaVO.contents}</textarea>
-	<%-- 	<c:forEach items="${QnaVO.qnaFileVOs}" var="file">
-			<img src="">	
-		</c:forEach> --%>
+	<div>
+		<a href="./update?num=${QnaVO.num}">수정</a>
+	</div>
 	</section>
 	
 

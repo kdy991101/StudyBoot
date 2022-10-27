@@ -7,6 +7,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -95,4 +96,9 @@ public class FileManager extends AbstractView {
 		multipartFile.transferTo(file);
 		return fileName;
 	}
+	
+//	public boolean deleteFile( String path, QnaFileVO qnaFileVO)throws Exception{
+//		File file = new File(path, qnaFileVO.getFileName());
+//		return file.delete();
+//	}
 }
