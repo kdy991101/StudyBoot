@@ -45,8 +45,21 @@ $(".check").click(function(){
 let results = [false, false, false, false, false];
 
 $("#id").blur(function(){
-    let result = nullCheck($("#id").val().length >= 2, $("#idr"), "ID는");
+    let id  = $("#id").val();
+    let result = nullCheck(id.length >= 2, $("#idr"), "ID는");
     results[0]=result;
+
+    //단, id가 ''비어있지 않을 때                                      IDCHECK AJAX
+    $.get("./idCheck?id="+id, function(data){
+        console.log("data : ", data);
+        if(data == '0'){
+            $("#udr").html("사용 가능한 ID입니다")
+            results[0]=true;
+        }else{
+            $("#udr").html("이미 사용중인 ID입니다")
+            results[0]=false
+        }
+    })
     
 });
 // $("#pw").change(function(){
@@ -98,9 +111,6 @@ $("#joinButton").click(function(){
     }else{
         $("#joinForm").submit();
     }
-    
-    
-    
     // let c = true;
     // $.each(results, function(idx, item){
     //     if(!item){

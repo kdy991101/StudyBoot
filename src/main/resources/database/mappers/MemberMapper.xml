@@ -8,14 +8,14 @@
 			(#{id}, #{pw}, #{name}, #{email}, 1)
 	</insert>
 	
-	<insert id="setRoleAdd" parameterType="RoleVO">
+	<insert id="setRoleAdd" parameterType="MemberVO">
 		INSERT INTO member_role VALUES
-		(#{id}, 1)
+		(3, #{id})
 	</insert>
 	
-	<select id="getIdCheck" parameterType="MemberVO" resultType="int">
+	<select id="getIdCheck" parameterType="MemberVO" resultType="Integer">
 		SELECT COUNT(*) FROM
-		MEMBER WHERE ID = #{id}  
+		MEMBER WHERE ID = #{id} 
 	</select>
 	
 	<select id="getLogin" parameterType="MemberVO" resultMap="getLoginResult">
