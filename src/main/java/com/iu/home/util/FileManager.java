@@ -85,13 +85,13 @@ public class FileManager extends AbstractView {
 		StringBuffer sb = new StringBuffer();
 		sb.append(fileName);
 		sb.append("_");
-		fileName = sb.toString();
 		
 		
 		String ex = multipartFile.getOriginalFilename();//아이유.jpg
 		ex = ex.substring(ex.lastIndexOf("."));
 		sb.append(ex);
 
+		fileName = sb.toString();
 		File file = new File(path, fileName);
 		multipartFile.transferTo(file);
 		return fileName;

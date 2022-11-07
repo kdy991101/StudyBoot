@@ -60,11 +60,6 @@ class QnaMapperTest {
 			qnaVO.setDepth(1L);
 			
 //			int result  = qnaMapper.setAdd(qnaVO);
-//			if(result > 0) {
-//				log.info("성공");
-//			}else {
-//				log.info("실패");
-//			}
 			}
 			
 		}
@@ -86,7 +81,7 @@ class QnaMapperTest {
 //			assertNotEquals(0, ar.size());
 //		}
 //		
-		//@Test
+		@Test
 		void qnaAdd()throws Exception{
 			QnaVO qnaVO = new QnaVO();
 			qnaVO.setNum(5L);

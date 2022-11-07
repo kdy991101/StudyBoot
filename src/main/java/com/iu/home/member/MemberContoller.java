@@ -63,59 +63,108 @@
 //}
 package com.iu.home.member;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/member/*")
 public class MemberContoller {
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	@GetMapping("logout")
-	public String logout(HttpSession session)throws Exception{
+	public String logout(HttpSession session) throws Exception {
+		log.info("========내가만든 logout 메서드");
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+
 	// 회원가입
 	@GetMapping("add")
-	public void join()throws Exception{
-		
+	public void join(@ModelAttribute MemberVO memberVO) throws Exception {
+
 	}
-	
+
 	@PostMapping("add")
-	public String join(MemberVO memberVO)throws Exception{
-		memberService.setAdd(memberVO);
-		return "redirect:./login";
-	}
-	
-	@GetMapping("login")
-	public void login()throws Exception{
+	public ModelAndView join(ModelAndView mv, @Valid MemberVO memberVO, BindingResult bindingResult) throws Exception {
 		
+//		if (bindingResult.hasErrors()) {
+//			// 검증에 실패하면 회원가입하는 jsp로 이동
+//			mv.setViewName("member/add");
+//			return mv;
+//		}
+		
+		boolean check = memberService.getMemberError(memberVO, bindingResult);
+		
+		if (check) {
+			// check가 true라면
+			if (bindingResult.hasErrors()) {//어너테이션만 검증하는 것임 그래서 pw를 검증하는 메서드를 호출해줘야 함
+				// 검증에 실패하면 회원가입하는 jsp로 이동
+				mv.setViewName("member/add");
+				
+				//============================================
+				List<FieldError> errors = bindingResult.getFieldErrors();
+				
+				for(FieldError fieldError:errors) {
+					log.info("=========================================================");
+					log.info("fieldError : {}", fieldError);
+					log.info("field = {} ", fieldError.getField());
+					log.info("Message = {}", fieldError.getRejectedValue());
+					log.info("Default = {}", fieldError.getDefaultMessage());
+					log.info("Code = {} ", fieldError.getCode());
+					mv.addObject(fieldError.getField(), fieldError.getDefaultMessage());
+					log.info("=========================================================");
+				}
+				return mv;
+			}
+		}
+		
+		int result = memberService.setAdd(memberVO);
+		mv.setViewName("redirect:../");
+		return mv;
 	}
-	
+
+	@GetMapping("login")
+	public void login(@RequestParam(defaultValue = "false",required = false) boolean error, String message, Model model) throws Exception {
+		//Controller에서 받아 jsp로 다시 보내도 되고 또는 
+		if(error) {
+			model.addAttribute("msg", "ID또는 PW를 확인해봐");
+		}
+	}
+
 	// 로그인
 	@PostMapping("login")
-	public String login(MemberVO memberVO, HttpSession session)throws Exception{
-		ModelAndView mv = new ModelAndView();
-		memberVO = memberService.getLogin(memberVO);
-		session.setAttribute("member", memberVO);
-		return "redirect:/";
-		}
-	
+	public String login(MemberVO memberVO, HttpSession session) throws Exception {
+		return "member/login";
+	}
+
 	@GetMapping("idCheck")
 	@ResponseBody
-	public int getIdCheck(MemberVO memberVO)throws Exception{
+	public int getIdCheck(MemberVO memberVO) throws Exception {
 		return memberService.getIdCheck(memberVO);
+	}
+	
+	@GetMapping("myPage")
+	public void myPage()throws Exception{
 	}
 
 }

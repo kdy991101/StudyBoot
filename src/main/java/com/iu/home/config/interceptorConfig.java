@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.iu.home.interceptors.StudyInterceptor;
 import com.iu.home.interceptors.TestInterceptor;
@@ -22,6 +23,8 @@ public class interceptorConfig implements WebMvcConfigurer{
 	private TestInterceptor testInterceptor;
 	@Autowired
 	private StudyInterceptor studyInterceptor;
+	@Autowired
+	private LocaleChangeInterceptor localeChangeInterceptor;
 	
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
@@ -45,5 +48,8 @@ public class interceptorConfig implements WebMvcConfigurer{
 					.addPathPatterns("/qna/**");
 			
 //		WebMvcConfigurer.super.addInterceptors(registry);
+			
+			registry.addInterceptor(localeChangeInterceptor)
+					.addPathPatterns("/**");// /로 시작하는 모든 애들은 여기를 지나가라
 		}
 }

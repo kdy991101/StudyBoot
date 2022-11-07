@@ -11,6 +11,7 @@ public class Pager {
 	
 	public void getRow() {
 		this.startRow = (this.getPage() - 1) * this.getPerPage();
+		
 	}
 	
 	public Long getPage() {

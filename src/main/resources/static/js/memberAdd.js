@@ -53,10 +53,10 @@ $("#id").blur(function(){
     $.get("./idCheck?id="+id, function(data){
         console.log("data : ", data);
         if(data == '0'){
-            $("#udr").html("사용 가능한 ID입니다")
+            $("#idr").html("사용 가능한 ID입니다")
             results[0]=true;
         }else{
-            $("#udr").html("이미 사용중인 ID입니다")
+            $("#idr").html("이미 사용중인 ID입니다")
             results[0]=false
         }
     })

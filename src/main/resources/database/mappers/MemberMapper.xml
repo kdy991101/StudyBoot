@@ -17,8 +17,8 @@
 		SELECT COUNT(*) FROM
 		MEMBER WHERE ID = #{id} 
 	</select>
-	
-	<select id="getLogin" parameterType="MemberVO" resultMap="getLoginResult">
+
+	<select id="getLogin" parameterType="String" resultMap="getLoginResult">
 		SELECT M.* , R.*
 		FROM 
 		MEMBER M
@@ -28,7 +28,7 @@
 		LEFT JOIN
 		ROLE R 
 		ON R.NUM = MR.NUM
-		WHERE M.ID=#{id} AND M.PW=#{pw}
+		WHERE M.ID=#{username}
 	</select>
 	
 	<resultMap type="MemberVO" id="getLoginResult">
