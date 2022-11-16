@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,12 +15,15 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Data;
 
 @Data
-public class MemberVO implements UserDetails {
+public class MemberVO implements UserDetails, OAuth2User{
 	
+
+
 	@NotBlank
 	private String id;
 	@NotBlank
@@ -34,6 +38,9 @@ public class MemberVO implements UserDetails {
 	private String email;
 	private boolean enabled;
 	private List<RoleVO> roleVOs;
+	
+	//OAuth2User, Token정보를 저장하는 attr
+	private Map<String, Object> attributes;
 	
 	@Range(max = 150, min = 0)
 	private int age;
@@ -96,5 +103,14 @@ public class MemberVO implements UserDetails {
 	//false = 계정 비활성화
 	public boolean isEnabled() {
 		return true;
+	}
+	//카카오, 구글, 네이버 회사 이름을 넣을거임 카카오만
+	private String social;
+	
+	@Override
+	public Map<String, Object> getAttributes() {
+		//
+		// TODO Auto-generated method stub
+		return this.attributes;
 	}
 }

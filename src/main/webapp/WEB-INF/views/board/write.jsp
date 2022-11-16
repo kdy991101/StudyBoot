@@ -57,7 +57,57 @@
 	<script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<script type="text/javascript">
-		$("#contents").summernote();
+ $('#contents').summernote({
+        tabsize: 4,
+        height: 250,
+      callbacks:{
+         onImageUpload:function(file){
+            console.log("ImageUpload");
+            console.log("file", file);
+			uploadFile(file);
+            $('#contents').summernote('pasteHTML', imgNode);
+         }
+      }
+      });
+	  function deleteFile(file){
+		console.log("src == >> ", file.attr("src"));
+		$.post("./summerFileDelete", {fileName: file.attr("src")}, function(result){
+			console.log("result =>", result)
+		})
+	  }
+
+     //ajax upload 함수
+     function uploadFile(file){
+      console.log("file", file);
+      //<form>
+      const formData = new FormData();
+      //<input type="file"
+      formData.append("file", file[0])
+
+      $.ajax({
+         type:"POST",
+         url:"summerFile",
+         data:
+            formData
+         ,
+         //header
+         cache:false,
+         processData:false,
+		 contentType:false,
+         enctype:"multipart/form-data",
+         success:function(img){
+            console.log("Image => ",img);
+			img = '<img src="'+img+'">
+			$('#contents').summernote('pasteHTML', img);
+         },
+         error:function(){
+            console.log("img upload failed");
+         }
+
+      });
+     }
+
+		
 	</script>	
 </body>
 </html>	

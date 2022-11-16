@@ -29,6 +29,12 @@ public class QnaService {
 	
 	@Value("${app.upload.qna}")//spEL
 	private String path;
+		
+	public String setSummerFile(MultipartFile file)throws Exception{
+	 String fileName = fileManager.saveFile(file, path);
+		fileName = "/file/qna/"+fileName;
+		return fileName; 
+	}
 	
 	public int setUpdate(QnaVO qnaVO)throws Exception{
 		return qnaMapper.setUpdate(qnaVO);
@@ -81,17 +87,26 @@ public class QnaService {
 		return qnaMapper.getFileDetail(qnaFileVO);
 	}
 	
-	public int setFileDelete(QnaFileVO qnaFileVO)throws Exception{
-		//조회
-		qnaFileVO = qnaMapper.getFileDetail(qnaFileVO);
-		//삭제
-		int result = qnaMapper.setFileDelete(qnaFileVO);
-		
-		if(result>0) {
-			File file = new File(path, qnaFileVO.getFileName());
-			file.delete();
-		}
-		return result;
+//	public int setFileDelete(QnaFileVO qnaFileVO)throws Exception{
+//		//조회
+//		qnaFileVO = qnaMapper.getFileDetail(qnaFileVO);
+//		//삭제
+//		int result = qnaMapper.setFileDelete(qnaFileVO);
+//		
+//		if(result>0) {
+//			File file = new File(path, qnaFileVO.getFileName());
+//			file.delete();
+//		}
+//		return result;
+//	}
+	
+	public boolean setSummerFileDelete(String fileName)throws Exception{
+		fileName = fileName.substring(fileName.lastIndexOf("/")+1);
+		log.info("fileName ===>>> {}", fileName);
+		File file = new File(path, fileName);
+		return file.delete();
+				
+				
 	}
 	
 }

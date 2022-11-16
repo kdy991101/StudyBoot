@@ -34,10 +34,12 @@
 		<h2><spring:message code="welcome" arguments="${member.name}"></spring:message></h2>
 		<h2><spring:message code="welcome2"  arguments="${member.id},${member.name}" argumentSeparator=","></spring:message></h2>
 		<a href="./member/myPage">myPage</a>
+
 		<a href="#" id="logout">로그아웃</a>
 		<form id="outForm" action="./member/logout" method="post">
 			<button>로그아웃</button>
 		</form>
+		<a href="/member/delete">회원 탈퇴</a>
 	</sec:authorize>
 
 	<!-- 로그인 전 -->	
@@ -69,6 +71,12 @@
 	<script type="text/javascript">
 		$("#logout").click(function(){
 			$("#outForm").submit();
+		})
+		
+		$("#kakao").click(function(){
+			$.get("https://developers.kakao.com/logout", function(){
+				location.reload();
+			})
 		})
 	</script>
 	

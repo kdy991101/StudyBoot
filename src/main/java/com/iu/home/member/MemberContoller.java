@@ -69,6 +69,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -90,13 +92,18 @@ public class MemberContoller {
 
 	@Autowired
 	private MemberService memberService;
-
-	@GetMapping("logout")
-	public String logout(HttpSession session) throws Exception {
-		log.info("========내가만든 logout 메서드");
-		session.invalidate();
-		return "redirect:/";
+	
+	@GetMapping("logoutResult")
+	public String socialLogout() throws Exception{
+		return "redirect:../";
 	}
+
+//	@GetMapping("logout")
+//	public String logout(HttpSession session) throws Exception {
+//		log.info("========내가만든 logout 메서드");
+//		session.invalidate();
+//		return "redirect:/";
+//	}
 
 	// 회원가입
 	@GetMapping("add")
@@ -166,5 +173,29 @@ public class MemberContoller {
 	@GetMapping("myPage")
 	public void myPage()throws Exception{
 	}
+	
+	@GetMapping("delete")
+	public ModelAndView setDelete(HttpSession httpSession, String pw)throws Exception{
+		//1, social, 일반 구분해야 함
+		//session에서 속성을 가지고 오아야 함
+		ModelAndView mv = new ModelAndView();
 
+		SecurityContextImpl context = (SecurityContextImpl) httpSession.getAttribute("SPRING_SECURITY_CONTEXT");
+		Authentication authentication =context.getAuthentication();//인증에 관련되어있는 정보
+		MemberVO memberVO=(MemberVO) authentication.getPrincipal();//memberVO가 나옴
+		log.info("AUthen => {}", authentication);
+		log.info("Member =++++++++++++++++++++++> {}", memberVO);
+
+		int	result=memberService.setDelete(memberVO);
+		
+		if (result > 0) {
+			//성공했으면 로그아웃
+			mv.setViewName("redirect:/member/logout");
+		}else {
+			//탈퇴 실패했을때에는 탈퇴실패, 관리자문의 메시지
+		}
+		return mv;
+		
+		
+	}
 }
